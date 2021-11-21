@@ -22,7 +22,9 @@ jobs:
             ${{ matrix.box }}-vagrant-
       - uses: actions/checkout@v2
       - name: Set up VM
-        run: vagrant up ${{ matrix.box }}
+        run: |
+          vagrant plugin install vagrant-disksize
+          vagrant up ${{ matrix.box }}
       - name: Package box
         run: |
           vagrant package ${{ matrix.box }} --output ${{ matrix.box }}.box
