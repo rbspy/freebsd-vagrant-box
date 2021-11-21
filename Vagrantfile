@@ -10,8 +10,6 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.provision "shell", inline: <<~SHELL
-    growfs -y /
-
     pkg bootstrap
     pkg update
     pkg install -y curl bash git gmake llvm
@@ -32,6 +30,9 @@ Vagrant.configure("2") do |config|
     ~/.rbenv/bin/rbenv global 3.0.2
 
     curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain 1.56.0
+
+    df -h
+    du -hs /home/vagrant
     EOF
   SHELL
 
