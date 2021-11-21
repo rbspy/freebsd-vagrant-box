@@ -12,9 +12,12 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: <<~SHELL
     pkg bootstrap
     pkg update
-    pkg install -y curl bash git gmake llvm
+    pkg install -y curl bash git gmake llvm virtualbox-ose-additions-nox11
     pkg clean -ay
     rm -rf /usr/ports /usr/share/doc
+
+    sysrc vboxguest_enable="YES"
+    sysrc vboxservice_enable="YES"
 
     chsh -s /usr/local/bin/bash vagrant
     su vagrant <<'EOF'
