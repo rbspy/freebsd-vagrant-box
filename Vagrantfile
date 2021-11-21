@@ -7,15 +7,14 @@ Vagrant.configure("2") do |config|
     fbsd_12_2.vm.box = "freebsd/FreeBSD-12.2-STABLE"
   end
 
-  config.vm.synced_folder ".", "/vagrant", type: "rsync",
-    rsync__exclude: ".git/",
-    rsync__auto: true
-
   config.vm.provision "shell", inline: <<~SHELL
     pkg bootstrap
     pkg install -y curl bash git gmake llvm
+    pkg clean -ay
+    rm -rf /usr/ports /usr/share/doc
 
-    su vagrant <<EOF
+    chsh -s /usr/local/bin/bash vagrant
+    su vagrant <<'EOF'
     git clone https://github.com/rbenv/rbenv.git ~/.rbenv
     git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
     echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
