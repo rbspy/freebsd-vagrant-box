@@ -1,8 +1,9 @@
 Vagrant.configure("2") do |config|
-  config.vm.define "fbsd_13_0" do |fbsd_13_0|
-    fbsd_13_0.vm.box = "freebsd/FreeBSD-13.0-RELEASE"
-    config.disksize.size = "16GB"
-  end
+  # TODO: Need to reduce this to <2GB during the build
+  # config.vm.define "fbsd_13_0" do |fbsd_13_0|
+  #   fbsd_13_0.vm.box = "freebsd/FreeBSD-13.0-RELEASE"
+  #   config.disksize.size = "16GB"
+  # end
 
   config.vm.define "fbsd_12_2" do |fbsd_12_2|
     fbsd_12_2.vm.box = "freebsd/FreeBSD-12.2-STABLE"
@@ -16,10 +17,13 @@ Vagrant.configure("2") do |config|
     pkg clean -ay
     rm -rf /usr/ports /usr/share/doc
 
+    # Enable Vagrant's Synced Folders feature (sometimes flaky for FreeBSD guests)
     sysrc vboxguest_enable="YES"
     sysrc vboxservice_enable="YES"
 
     chsh -s /usr/local/bin/bash vagrant
+
+    # Install ruby and rust toolchains
     su vagrant <<'EOF'
     git clone https://github.com/rbenv/rbenv.git ~/.rbenv
     git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
@@ -33,10 +37,10 @@ Vagrant.configure("2") do |config|
     ~/.rbenv/bin/rbenv global 3.0.2
 
     curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain 1.56.0
+    EOF
 
     df -h
     du -hs /home/vagrant
-    EOF
   SHELL
 
   config.vm.provider "virtualbox" do |v|
