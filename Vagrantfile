@@ -24,17 +24,19 @@ Vagrant.configure("2") do |config|
     chsh -s /usr/local/bin/bash vagrant
 
     # Install ruby and rust toolchains
-    su vagrant <<'EOF'
+    su -l vagrant <<'EOF'
     git clone https://github.com/rbenv/rbenv.git ~/.rbenv
     git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
     echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
     echo 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bash_profile
     echo 'eval "$(rbenv init - bash)"' >> ~/.bash_profile
 
-    env MAKEFLAGS="-j2" ~/.rbenv/bin/rbenv install 2.7.4
-    env MAKEFLAGS="-j2" ~/.rbenv/bin/rbenv install 3.0.2
-    ~/.rbenv/bin/rbenv rehash
-    ~/.rbenv/bin/rbenv global 3.0.2
+    source ~/.bash_profile
+
+    MAKEFLAGS="-j2" rbenv install 2.7.4
+    MAKEFLAGS="-j2" rbenv install 3.0.2
+    rbenv rehash
+    rbenv global 3.0.2
 
     curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain 1.56.0
     EOF
