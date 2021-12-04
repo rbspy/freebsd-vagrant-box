@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         box:
-          #- fbsd_13_0
+          - fbsd_13_0
           - fbsd_12_2
     steps:
       - name: Cache Vagrant boxes

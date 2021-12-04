@@ -1,9 +1,8 @@
 Vagrant.configure("2") do |config|
-  # TODO: Need to reduce this to <2GB during the build
-  # config.vm.define "fbsd_13_0" do |fbsd_13_0|
-  #   fbsd_13_0.vm.box = "freebsd/FreeBSD-13.0-RELEASE"
-  #   config.disksize.size = "16GB"
-  # end
+  config.vm.define "fbsd_13_0" do |fbsd_13_0|
+    fbsd_13_0.vm.box = "freebsd/FreeBSD-13.0-RELEASE"
+    config.disksize.size = "16GB"
+  end
 
   config.vm.define "fbsd_12_2" do |fbsd_12_2|
     fbsd_12_2.vm.box = "freebsd/FreeBSD-12.2-STABLE"
