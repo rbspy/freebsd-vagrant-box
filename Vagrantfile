@@ -13,7 +13,7 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: <<~SHELL
     pkg bootstrap
     pkg update
-    pkg install -y curl bash git gmake llvm
+    pkg install -y curl bash git gmake
     # Enable Vagrant's Synced Folders feature (sometimes flaky for FreeBSD guests)
     #pkg install -y virtualbox-ose-additions-nox11
     #sysrc vboxguest_enable="YES"
