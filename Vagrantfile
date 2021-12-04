@@ -41,6 +41,8 @@ Vagrant.configure("2") do |config|
     curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain 1.56.0
     EOF
 
+    pkg prime-list
+
     df -h
     du -hs /home/vagrant
   SHELL
