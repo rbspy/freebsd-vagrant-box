@@ -32,12 +32,12 @@ Vagrant.configure("2") do |config|
 
     source ~/.bash_profile
 
-    MAKEFLAGS="-j2" rbenv install 2.7.4
-    MAKEFLAGS="-j2" rbenv install 3.0.2
+    MAKEFLAGS="-j2" rbenv install 2.7.5
+    MAKEFLAGS="-j2" rbenv install 3.1.0
     rbenv rehash
-    rbenv global 3.0.2
+    rbenv global 3.1.0
 
-    curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain 1.56.0
+    curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain 1.57.0
     EOF
 
     pkg prime-list
