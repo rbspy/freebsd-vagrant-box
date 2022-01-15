@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: <<~SHELL
     pkg bootstrap
     pkg update
-    pkg install -y curl bash git gmake
+    pkg install -y curl bash git gmake sudo
     # Enable Vagrant's Synced Folders feature (sometimes flaky for FreeBSD guests)
     #pkg install -y virtualbox-ose-additions-nox11
     #sysrc vboxguest_enable="YES"
@@ -21,6 +21,7 @@ Vagrant.configure("2") do |config|
     rm -rf /usr/ports /usr/share/doc
 
     chsh -s /usr/local/bin/bash vagrant
+    pw groupmod wheel -m vagrant
 
     # Install ruby and rust toolchains
     su -l vagrant <<'EOF'
