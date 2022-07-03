@@ -35,8 +35,10 @@ Vagrant.configure("2") do |config|
 
     source ~/.bash_profile
 
-    MAKEFLAGS="-j2" rbenv install 2.7.6
-    MAKEFLAGS="-j2" rbenv install 3.1.2
+    export MAKEFLAGS="-j2"
+    export RUBY_CONFIGURE_OPTS="--disable-install-doc"
+    rbenv install 2.7.6
+    rbenv install 3.1.2
     rbenv rehash
     rbenv global 3.1.2
 
