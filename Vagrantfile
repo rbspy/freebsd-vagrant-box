@@ -1,12 +1,12 @@
 Vagrant.configure("2") do |config|
-  config.vm.define "fbsd_13_0" do |fbsd_13_0|
-    fbsd_13_0.vm.box = "freebsd/FreeBSD-13.0-RELEASE"
-    config.disksize.size = "16GB"
+  config.disksize.size = "16GB"
+
+  config.vm.define "fbsd_13_1" do |c|
+    c.vm.box = "freebsd/FreeBSD-13.1-RELEASE"
   end
 
-  config.vm.define "fbsd_12_2" do |fbsd_12_2|
-    fbsd_12_2.vm.box = "freebsd/FreeBSD-12.2-STABLE"
-    config.disksize.size = "16GB"
+  config.vm.define "fbsd_12_3" do |c|
+    c.vm.box = "freebsd/FreeBSD-12.3-STABLE"
   end
 
   config.vm.synced_folder ".", "/vagrant", disabled: true
