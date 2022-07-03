@@ -44,6 +44,9 @@ Vagrant.configure("2") do |config|
     EOF
 
     pkg prime-list
+    pkg clean
+
+    rm -rf /usr/obj /usr/ports /usr/src
 
     df -h
     du -hs /home/vagrant
