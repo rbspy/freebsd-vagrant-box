@@ -2,6 +2,9 @@ name: ci
 on:
   push:
     tags:
+  schedule:
+    - cron: "0 0 * * 1"
+  workflow_dispatch:
 jobs:
   package-box:
     name: Package Vagrant Boxes
