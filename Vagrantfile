@@ -9,6 +9,8 @@ Vagrant.configure("2") do |config|
     config.disksize.size = "16GB"
   end
 
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+
   config.vm.provision "shell", inline: <<~SHELL
     pkg bootstrap
     pkg update
