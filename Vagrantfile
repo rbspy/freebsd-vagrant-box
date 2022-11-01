@@ -7,6 +7,8 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "fbsd_12_3" do |c|
     c.vm.box = "freebsd/FreeBSD-12.3-STABLE"
+    # Workaround for 404 error on 2022.09.30
+    c.vm.box_version = "2022.09.23"
   end
 
   config.vm.synced_folder ".", "/vagrant", disabled: true
