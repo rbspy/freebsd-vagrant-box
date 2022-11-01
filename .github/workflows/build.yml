@@ -19,13 +19,13 @@ jobs:
       - name: Install Vagrant
         run: brew install vagrant
       - name: Cache Vagrant boxes
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ~/.vagrant.d
           key: ${{ matrix.box }}-vagrant-${{ hashFiles('Vagrantfile') }}
           restore-keys: |
             ${{ matrix.box }}-vagrant-
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Set up VM
         run: |
           vagrant plugin install vagrant-disksize
