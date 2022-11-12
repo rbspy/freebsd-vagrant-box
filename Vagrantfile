@@ -46,7 +46,7 @@ Vagrant.configure("2") do |config|
     shopt -s globstar
     rm -rf ~/.rbenv/versions/**/ri
 
-    curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain 1.65.0
+    curl https://sh.rustup.rs -sSf | sh -s -- -y --profile minimal --default-toolchain 1.65.0
     EOF
 
     pkg prime-list
