@@ -52,7 +52,7 @@ Vagrant.configure("2") do |config|
     pkg prime-list
     pkg clean
 
-    rm -rf /usr/obj /usr/ports /usr/src /usr/lib/debug /var/db
+    rm -rf /usr/obj /usr/ports /usr/src /usr/tests /usr/lib/debug /var/db
 
     df -h
     du -hs /home/vagrant
