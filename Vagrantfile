@@ -56,6 +56,8 @@ Vagrant.configure("2") do |config|
 
     df -h
     du -hs /home/vagrant
+
+    du -ah / | sort -r -h | head -25
   SHELL
 
   config.vm.provider "virtualbox" do |v|
