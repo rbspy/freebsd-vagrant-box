@@ -42,6 +42,9 @@ Vagrant.configure("2") do |config|
     rbenv install 3.1.2
     rbenv rehash
     rbenv global 3.1.2
+    # Clean up any lingering documentation files
+    shopt -s globstar
+    rm -rf ~/.rbenv/versions/**/ri
 
     curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain 1.65.0
     EOF
