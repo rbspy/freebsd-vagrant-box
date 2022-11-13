@@ -54,9 +54,14 @@ Vagrant.configure("2") do |config|
 
     rm -rf /usr/obj /usr/ports /usr/src /usr/tests /usr/lib/debug /var/db
 
+    # Adapted from bento's minimize.sh. This writes zeroes to the disk so that the empty space is
+    # easily compressed.
+    dd if=/dev/zero of=/EMPTY bs=1M
+    rm -f /EMPTY
+    sync
+
     df -h
     du -hs /home/vagrant
-
     du -ah / | sort -r -h | head -25
   SHELL
 
