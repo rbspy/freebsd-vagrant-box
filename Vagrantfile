@@ -1,14 +1,12 @@
 Vagrant.configure("2") do |config|
   config.disksize.size = "16GB"
 
-  config.vm.define "fbsd_13_1" do |c|
-    c.vm.box = "freebsd/FreeBSD-13.1-RELEASE"
+  config.vm.define "fbsd_13_2" do |c|
+    c.vm.box = "freebsd/FreeBSD-13.2-RELEASE"
   end
 
-  config.vm.define "fbsd_12_3" do |c|
-    c.vm.box = "freebsd/FreeBSD-12.3-STABLE"
-    # Workaround for 404 error on 2022.09.30
-    c.vm.box_version = "2022.09.23"
+  config.vm.define "fbsd_12_4" do |c|
+    c.vm.box = "freebsd/FreeBSD-12.4-STABLE"
   end
 
   config.vm.synced_folder ".", "/vagrant", disabled: true
