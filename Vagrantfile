@@ -37,9 +37,9 @@ Vagrant.configure("2") do |config|
 
     export MAKEFLAGS="-j2"
     export RUBY_CONFIGURE_OPTS="--disable-install-doc"
-    rbenv install 3.1.2
+    rbenv install 3.2.2
     rbenv rehash
-    rbenv global 3.1.2
+    rbenv global 3.2.2
     # Clean up any lingering documentation files
     shopt -s globstar
     rm -rf ~/.rbenv/versions/**/ri
