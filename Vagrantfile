@@ -12,6 +12,8 @@ Vagrant.configure("2") do |config|
   config.vm.synced_folder ".", "/vagrant", disabled: true
 
   config.vm.provision "shell", inline: <<~SHELL
+    set -e
+
     pkg bootstrap
     pkg update
     pkg install -y curl bash git gmake sudo llvm
@@ -37,7 +39,7 @@ Vagrant.configure("2") do |config|
 
     export MAKEFLAGS="-j2"
     export RUBY_CONFIGURE_OPTS="--disable-install-doc"
-    rbenv install 3.2.2
+    rbenv install 3.2.2 || (cat /tmp/ruby-build*.log && exit 1)
     rbenv rehash
     rbenv global 3.2.2
     # Clean up any lingering documentation files
