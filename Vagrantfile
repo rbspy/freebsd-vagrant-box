@@ -56,7 +56,7 @@ Vagrant.configure("2") do |config|
 
     # Adapted from bento's minimize.sh. This writes zeroes to the disk so that the empty space is
     # easily compressed.
-    dd if=/dev/zero of=/EMPTY bs=1M
+    dd if=/dev/zero of=/EMPTY bs=1M || true
     rm -f /EMPTY
     sync
 
