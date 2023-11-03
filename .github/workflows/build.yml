@@ -29,6 +29,7 @@ jobs:
       - name: Set up VM
         run: |
           vagrant plugin install vagrant-disksize
+          vagrant status
           vagrant up ${{ matrix.box }}
       - name: Package box
         run: |
