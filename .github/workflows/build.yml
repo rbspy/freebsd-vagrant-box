@@ -22,9 +22,9 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.vagrant.d
-          key: ${{ matrix.box }}-vagrant-${{ hashFiles('Vagrantfile') }}
+          key: ${{ matrix.box }}-vagrant-20231102-${{ hashFiles('Vagrantfile') }}
           restore-keys: |
-            ${{ matrix.box }}-vagrant-
+            ${{ matrix.box }}-vagrant-20231102-
       - uses: actions/checkout@v3
       - name: Set up VM
         run: |
