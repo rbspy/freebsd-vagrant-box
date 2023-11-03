@@ -16,10 +16,8 @@ jobs:
           - fbsd_13_2
           - fbsd_12_4
     steps:
-      - name: Install virtualization tools
-        run: |
-          brew install vagrant
-          brew install virtualbox
+      - name: Install Vagrant
+        run: brew install vagrant
       - name: Cache Vagrant boxes
         uses: actions/cache@v3
         with:
