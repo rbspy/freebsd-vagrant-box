@@ -2,7 +2,7 @@ Vagrant.configure("2") do |config|
   config.disksize.size = "16GB"
 
   config.vm.define "fbsd_13_2" do |c|
-    c.vm.box = "freebsd/FreeBSD-13.2-RELEASE"
+    c.vm.box = "freebsd/FreeBSD-13.2-STABLE"
   end
 
   config.vm.define "fbsd_12_4" do |c|
