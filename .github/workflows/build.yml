@@ -8,30 +8,34 @@ on:
 jobs:
   package-box:
     name: Package Vagrant Boxes
-    runs-on: macos-12
+    runs-on: ubuntu-22.04
+    timeout-minutes: 60
     strategy:
       fail-fast: false
       matrix:
         box:
-          - fbsd_13_2
-          - fbsd_12_4
+          - fbsd_12
+          - fbsd_13
+          - fbsd_14
     steps:
-      - name: Install Vagrant
-        run: brew install vagrant
-      - name: Cache Vagrant boxes
-        uses: actions/cache@v3
-        with:
-          path: ~/.vagrant.d
-          key: ${{ matrix.box }}-vagrant-20231102-${{ hashFiles('Vagrantfile') }}
-          restore-keys: |
-            ${{ matrix.box }}-vagrant-20231102-
-      - uses: actions/checkout@v3
-      - name: Set up VM
+      - name: Display CPU info
+        run: lscpu
+      - name: Install Vagrant and QEMU
         run: |
-          vagrant plugin install vagrant-disksize
+          sudo apt-get install -qq -o=Dpkg::Use-Pty=0 moreutils
+          sudo chronic apt-get install -qq -o=Dpkg::Use-Pty=0 vagrant qemu-system virtualbox qemu libvirt-daemon-system libvirt-clients libxslt-dev libxml2-dev libvirt-dev zlib1g-dev ruby-dev ruby-libvirt ebtables dnsmasq-base
+      - uses: actions/checkout@v3
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Set up VM
+        shell: sudo bash {0}
+        run: |
+          vagrant plugin install vagrant-libvirt
+          vagrant plugin install vagrant-mutate
           vagrant status
-          vagrant up ${{ matrix.box }}
+          vagrant up --provider libvirt ${{ matrix.box }}
       - name: Package box
+        shell: sudo bash {0}
         run: |
           vagrant package ${{ matrix.box }} --output ${{ matrix.box }}.box
           ls -ahl *.box

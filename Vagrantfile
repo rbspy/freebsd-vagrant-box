@@ -1,15 +1,24 @@
 Vagrant.configure("2") do |config|
-  config.disksize.size = "16GB"
-
-  config.vm.define "fbsd_13_2" do |c|
-    c.vm.box = "freebsd/FreeBSD-13.2-STABLE"
+  config.vm.define "fbsd_12" do |c|
+    c.vm.box = "roboxes/freebsd12"
   end
 
-  config.vm.define "fbsd_12_4" do |c|
-    c.vm.box = "freebsd/FreeBSD-12.4-STABLE"
+  config.vm.define "fbsd_13" do |c|
+    c.vm.box = "roboxes/freebsd13"
   end
 
-  config.vm.synced_folder ".", "/vagrant", disabled: true
+  config.vm.define "fbsd_14" do |c|
+    c.vm.box = "roboxes/freebsd14"
+  end
+
+  config.vm.provider "libvirt" do |qe|
+    # https://vagrant-libvirt.github.io/vagrant-libvirt/configuration.html
+    qe.driver = "kvm"
+    qe.cpus = 1
+    qe.memory = 8192
+  end
+
+  config.vm.boot_timeout = 600
 
   config.vm.provision "shell", inline: <<~SHELL
     set -e
@@ -17,10 +26,6 @@ Vagrant.configure("2") do |config|
     pkg bootstrap
     pkg update
     pkg install -y curl bash git gmake sudo llvm libyaml
-    # Enable Vagrant's Synced Folders feature (sometimes flaky for FreeBSD guests)
-    #pkg install -y virtualbox-ose-additions-nox11
-    #sysrc vboxguest_enable="YES"
-    #sysrc vboxservice_enable="YES"
     pkg clean -ay
     rm -rf /usr/ports /usr/share/doc
 
@@ -49,26 +54,28 @@ Vagrant.configure("2") do |config|
     curl https://sh.rustup.rs -sSf | sh -s -- -y --profile minimal --default-toolchain 1.72.1
     EOF
 
+    echo 'Disk usage before cleanup:'
+    df -h
+    du -hs /home/vagrant
+    du -ah / | sort -r -h | head -25
+
+    echo 'Cleaning up packages'
     pkg prime-list
     pkg clean
 
+    echo 'Cleaning up unneeded directories'
     rm -rf /usr/obj /usr/ports /usr/src /usr/tests /usr/lib/debug /var/db
 
     # Adapted from bento's minimize.sh. This writes zeroes to the disk so that the empty space is
     # easily compressed.
-    dd if=/dev/zero of=/EMPTY bs=1M || true
+    echo 'Zeroing out empty space'
+    dd if=/dev/zero of=/EMPTY bs=1G count=4 || true
     rm -f /EMPTY
     sync
 
+    echo 'Disk usage after cleanup:'
     df -h
     du -hs /home/vagrant
     du -ah / | sort -r -h | head -25
   SHELL
-
-  config.vm.provider "virtualbox" do |v|
-    v.memory = 8192
-    v.cpus = 3
-  end
-
-  config.vm.boot_timeout = 600
 end
